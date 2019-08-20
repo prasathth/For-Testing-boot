@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class MailDirecter {
 	@Autowired
 	UserService userservice;
 	
-	@GetMapping("/getdata/{id}")
+	@GetMapping("/getdata")
 	public Object sas()
 	{
 		ObjectNode objectNode = mapper.createObjectNode();
@@ -61,7 +62,7 @@ public class MailDirecter {
 	
 	
 	@PostMapping("/mail")
-	public ModelAndView xyz(@RequestParam String id)
+	public ModelAndView xyz(@RequestParam(value="id") String id)
 	{
 		User u = userservice.findById(Integer.parseInt(id));
 		
@@ -70,14 +71,14 @@ public class MailDirecter {
 		
 		ModelAndView modelandview = new ModelAndView("out.jsp");
 		modelandview.addObject("email", u.getEmail());
-		
+		/*
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(u.getEmail());
         mailMessage.setSubject("Complete Registration!");
         //mailMessage.setFrom("prasathth.bm.mail@gmail.com");
         mailMessage.setText("http://localhost:8888/"+u.getEmail());
         javamail.send(mailMessage);
-        
+        */
         return modelandview;
 	}
 	
